@@ -1,0 +1,101 @@
+<!--
+
+Это простейшие примеры javascript. Просто откройте этот файл в любом браузере, который поддерживает js.
+
+На странице присутствует:
+* hello world, написанное через js
+* поле ввода, содержимое которого выводится в другом месте средствами js
+* небезопасное поле ввода, для демонстрации возможных уязвимостей при работе с js
+
+-->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>JS hello world</title>
+</head>
+<body>
+
+
+
+    <!-- 
+        Нарисуем какую-нибудь простейшую страничку.
+        Чистый js (без фреймворков) как правило предполагает наличие чего-то на странице,
+        хотя это и не обязательно - можно нагенерить страницу прямо на лету только с помощью js.
+    -->
+    <div id="root">
+        <br />
+    
+        <!-- Здесь напишем hello world -->
+        <div id="header">
+            loading...
+        </div>
+        <br /><br /><br /><br />
+        
+        <!-- Здесь будем перебрасывать содержимое input в output -->
+        <div id="data">
+            Input text: <input type="text" id="input" /><br /><br />
+            Your text: <span id="output"></span>
+        </div>
+        <br /><br /><br /><br />
+        
+        <!-- Здесь будем перебрасывать содержимое input в output с уязвимостью - возможностью вставить произвольный html-->
+        <div id="hackable_data">
+            Hackable input text: <input type="text" id="hackable_input" /><br /><br />
+            Your hackable text: <span id="hackable_output"></span>
+        </div>
+    </div>
+
+    
+    
+    
+    
+    
+    <!-- 
+        А это javascript встроенный прямо в html. Можно сделать отдельный файл js и добавить тег <script src=...> чтобы подгрузить
+        этот скрипт отдельно (В этом случае браузер выполнит отдельный http-запрос, чтобы получить ваш js-файл)
+    -->
+    <script type="text/javascript">
+        var main = function() {
+            //точка входа, которая начинает выполняться, когда документ загружен
+        
+            //консоль в браузере как правило открывается через F12
+            console.log("hello world!");
+            
+            //пишем hello world на одном из элементов DOM
+            window.document.getElementById("header").textContent = "hello world from javascript!";
+            
+            //устанавливаем обработчик события на любое изменение в поле ввода
+            window.document.getElementById("input").oninput = onInputChange;
+            
+            //аналогично, но поле ввода небезопасно - для демонстрации уязвимостей
+            window.document.getElementById("hackable_input").oninput = onInputChangeHackable;
+        };
+        
+        var onInputChange = function() {
+            //обработчик события на любое изменение в поле ввода. Дублирует содержимое поля ввода в текстовый элемент.
+            window.document.getElementById("output").textContent = window.document.getElementById("input").value;
+        };
+        
+        var onInputChangeHackable = function() {
+            //обработчик события с уязвимостью - позволяет пользователю установить произвольное содежимое html страницы, в т.ч. и javascript код
+            window.document.getElementById("hackable_output").innerHTML = window.document.getElementById("hackable_input").value;
+            
+            //попробуйте в эту строку ввода вставить: 
+            //
+            //    <img src="not_esixting_data" onerror="alert('your site was hacked!');">
+            //
+            //и появится сообщение, демонстрирующее возможность выполнить произвольный javascript на вашей странице. Если этот зловредный текст пришёл бы другим, менее очевидным путём
+            //(например через ссылку или из внутренней базы данных бэкенда), злоумышленник мог бы выполнить свой javascript от вашего имени
+            //и таким образом украсть ваши приватные данные, отправив их себе на сервер. Эта уязвимость называется XSS, подробнее в других разделах.
+        };
+
+        //основное тело скрипта - просто назначается обработка события - когда документ загрузился, выполняем функцию main. 
+        //Если выполнять все действия в основном теле скрипта, он начнёт выполняться ещё до загрузки всех элементов (т.е. будут недоступны элементы ниже тега <script>)
+        window.onload = main;
+    </script>
+    
+</body>
+</html>
