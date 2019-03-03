@@ -7,7 +7,7 @@ module.exports = {
   //у меня по умолчанию генерируется в dist/build.js
   output: {
     filename: 'build.js'
-  },
+  }
 
 };
 
