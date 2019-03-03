@@ -18,7 +18,7 @@
 
 ## Как работает
 * В исходном html есть только общий div container где рендерится приложение react
-* Точка входа в js - получить это container средствами обычного js и отдать его в root-вую функцию реакта ReactDOM.render
+* Точка входа в js - это получить container средствами обычного js и отдать его в root-вую функцию реакта ReactDOM.render
 * Чтобы сделать компонент реакта надо унаследоваться от React.Component и определить функцию render
 ```js
 export default class Root extends React.Component {
