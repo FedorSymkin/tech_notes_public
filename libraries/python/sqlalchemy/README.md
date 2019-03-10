@@ -21,5 +21,6 @@
 * отношения многое-ко-многим
 
 ## Полезные ссылки
+* https://docs.sqlalchemy.org/
 * https://ru.wikibooks.org/wiki/SQLAlchemy
 * https://www.pythoncentral.io/overview-sqlalchemys-expression-language-orm-queries/
