@@ -94,8 +94,10 @@ def main():
     # Прицепили его в sqlalchemy
     session.add(user)
 
-    # Вот здесь происходит SQL-запрос
+    # Вот здесь происходит SQL-запрос.
     session.commit()
+
+    # Кстати, session уммет и откатывать изменения, гуглить "sqlalchemy session rollback"
 
     # Прочитали из БД - видно что строка появилась
     print('read user: {}'.format(
