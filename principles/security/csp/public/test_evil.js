@@ -1,0 +1,1 @@
+window.document.getElementById("script9051").textContent = "script executed: hello world from script of 9051!";

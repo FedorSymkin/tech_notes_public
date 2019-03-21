@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>main</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+    	#inline_css_head {
+    		color: green;
+    	}
+	</style>
+
+</head>
+<body>
+    <h1>CSP base concept, {{ name }} page</h1>
+    <hr>
+
+	<div class='group green'>
+	    <h2>Same origin data from 127.0.0.1:9050</h2>
+
+	    <b>img:</b> <br/> <img src='plus.png'></img><br/>
+	    <b>script:</b> <br/> <div id='script9050'><font color='red'>no script</font></div><br/>
+		<b>ajax Get:</b> <br/> <div id='ajax9050'><font color='red'>no ajax</font></div><br/>
+		<b>ajax Post:</b> <br/> <div id='ajaxPost9050'><font color='red'>no ajax</font></div><br/>
+		<b>websocket:</b> <br/> <div id='websocket9050'><font color='red'>no websocket</font></div><br/>
+
+	</div>
+
+	<div class='group red'>
+	    <h2>Other origin data from 127.0.0.1:9051</h2>
+
+	    <b>img:</b> <br/> <img src='http://127.0.0.1:9051/plus.png'></img><br/>
+	    <b>script:</b> <br/> <div id='script9051'><font color='red'>no script</font></div><br/>
+	    <b>ajax Get:</b> <br/> <div id='ajax9051'><font color='red'>no ajax</font></div><br/>
+		<b>ajax Post:</b> <br/> <div id='ajaxPost9051'><font color='red'>no ajax</font></div><br/>
+		<b>websocket:</b> <br/> <div id='websocket9051'><font color='red'>no websocket</font></div><br/>
+
+    </div>
+
+    <div class='group'>
+    	<b>Inline js:</b> <br/> <div id='inlinejs'><font color='red'>no js</font></div><br/>
+    	<script>
+    		window.document.getElementById("inlinejs").textContent = "script executed: hello world from inline js!";
+    	</script>
+
+    	<b>js eval:</b> <br/> <div id='js_eval'><font color='red'>no js</font></div><br/>
+    	<b>Inline css:</b> <br/> <div id='inline_css' style='color: green;'>should be green</div><br/>
+    	<b>Inline css in head:</b> <br/> <div id='inline_css_head'>should be green</div><br/>
+
+    	<b>inline js event:</b> <br/> 
+    	<button onClick='window.document.getElementById("inline_js_event").textContent = "script executed: hello world from inline js event!";'>click me</button>
+    	<div id='inline_js_event'></div><br/>
+    </div>
+
+</body>
+
+<script src="/jquery.min.js"></script>
+<script src="/socket.io.min.js"></script>
+<script src='/test_main.js'></script>
+<script src='/check_ajax.js'></script>
+<script src='/check_websocket.js'></script>
+<script src="http://127.0.0.1:9051/test_evil.js"></script>
+<script src='/check_eval.js'></script>
+
+</html>
