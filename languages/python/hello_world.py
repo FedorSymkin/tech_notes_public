@@ -1,7 +1,7 @@
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
 # Несколько примеров разных hello world на python 3
-# Запускать так: python3 ./hello_world.py
 
 
 def default_hello_world():
