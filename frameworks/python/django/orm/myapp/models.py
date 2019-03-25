@@ -1,5 +1,7 @@
 from django.db import models
 from django.utils import timezone
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Create your models here.
 
@@ -33,3 +35,10 @@ class Employee(models.Model):
 
     def __str__(self):
         return '{} {}'.format(self.first_name, self.surname)
+
+
+@receiver(post_save, sender=Employee)
+def save_profile(sender, instance, **kwargs):
+    # Django умеет перехватывать события при работе с БД. Здесь просто пишем в консоль,
+    # но на практике здесь можно параллельно что-нибудь ещё создать / изменить в БД
+    print('saved: {}'.format(instance))
