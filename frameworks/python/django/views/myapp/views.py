@@ -39,11 +39,13 @@ def home(request):
         After that, test views:<br>
 
         <a href='{employee_list}'>employee_list</a><br/>
+        <a href='{employees_pages}?page=2'>employee_list with pages</a><br/>
         <a href='{employee_create}'>new employee</a><br/>
     '''.format(
         make_data=reverse('make_data'),
         employee_list=reverse('employee_list'),
         employee_create=reverse('employee_create'),
+        employees_pages=reverse('employees_pages'),
     ))
 
 
@@ -77,6 +79,10 @@ class EmployeeListView(ListView):
     # Ещё одна опциональная штука - как сортировать.
     # Наверняка есть как фиьльтровать и проч. настройки запроса в БД
     ordering = ['first_name']
+
+
+class EmployeeListViewPages(EmployeeListView):
+    paginate_by = 2
 
 
 class EmployeeDetailsView(DetailView):
