@@ -1,0 +1,10 @@
+<form method="POST">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Edit employee</legend>
+        {{ form }}
+    </fieldset>
+    <div>
+        <button type="submit">OK</button>
+    </div>
+</form>

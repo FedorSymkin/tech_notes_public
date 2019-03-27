@@ -1,0 +1,8 @@
+{% for employee in employees %}
+    <div>
+        {{ employee.first_name }} {{ employee.surname }} from {{ employee.department.name }}
+        <a href="{% url 'employee_details' employee.id %}">details</a>
+        <a href="{% url 'employee_update' employee.id %}">update</a>
+        <a href="{% url 'employee_delete' employee.id %}">delete</a>
+    </div>
+{% endfor %}
