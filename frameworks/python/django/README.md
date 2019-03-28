@@ -18,5 +18,6 @@ Framework python для создания веб-приложений. Позво
 	* Дружит с apache через wsgi
 	* И многое другое
 
-## Что показано в примерах
-TODO
+## Источник информации
+* https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p
+* https://github.com/CoreyMSchafer/code_snippets/tree/master/Django_Blog
