@@ -46,6 +46,11 @@ class PostView(generics.RetrieveAPIView):
     def get_queryset(self):
         return models.Post.objects.all()
 
+    # Это опциональная штука - когда мы в работу Serializer-а (которая начинается после извлечения данных из базы)
+    # хотим что-то пробросить из view, например в данном случае request от пользователя
+    def get_serializer_context(self, *args, **kwargs):
+        return {"request": self.request}
+
     # заметим также, что здесь с отличие от обычных views, нет прямой связи с моделью: model = models.Post,
     # Cвязь с моделями только через get_request.
     # Т.е.: если мы тут поставим models.SomeElse.objects.all() - ничего не упадёт, а просто в

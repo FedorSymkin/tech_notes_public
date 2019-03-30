@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.reverse import reverse as api_reverse
 from . import models
 
 
@@ -10,9 +11,10 @@ from . import models
 
 # Это serializer для постов из нашего блога
 class PostSerializer(serializers.ModelSerializer):
-    # Смысл этих двух строчек - см. ниже
+    # Смысл этих трёх строчек - см. ниже
     author = serializers.SerializerMethodField()
     title = serializers.SerializerMethodField()
+    request_url = serializers.SerializerMethodField()
 
     # class Meta - также как в forms - задаём класс модели, из которой берём данные
     # и какие поля отдавать в json на выдачу
@@ -23,6 +25,7 @@ class PostSerializer(serializers.ModelSerializer):
             'content',
             'date_posted',
             'author',
+            'request_url',
         ]
 
     # А поле author мы хотим отдать чуть по-другому. По умолчанию в json будет просто id автора поста.
@@ -53,3 +56,14 @@ class PostSerializer(serializers.ModelSerializer):
     # https://stackoverflow.com/questions/37475829/django-rest-framework-how-to-update-serializermethodfield
     def get_title(self, obj):
         return obj.title.upper()
+
+    # Поле request_url мы таким же образом генерируем на лету
+    # В этом поле мы хотим отдать "http://127.0.0.1:8000/post/<id>".
+    # Для того, чтобы это сделать мы подхватываем пользовательский request, который нам передал view
+    # (см. get_serializer_context) и прокидываем в функцию api_reverse, которая формирует ссылку.
+    #
+    # Для чего прокидывать? Чтобы получить строку вида "http://127.0.0.1:8000/post/<id>" надо знать хост и порт.
+    # Если без request, будет просто /post/<id>
+    def get_request_url(self, obj):
+        request = self.context.get("request")
+        return api_reverse("viewpost", args={obj.id}, request=request)

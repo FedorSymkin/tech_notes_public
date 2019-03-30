@@ -20,3 +20,9 @@ class PostSerializer(serializers.ModelSerializer):
 
     def get_author(self, obj):
         return obj.author.username
+
+    def validate_title(self, value):
+        # Проверяем поля перед записью. validate_... - зарерервированное название функции проверки
+        if 'badword' in value:
+            raise serializers.ValidationError("Title contains a bad word! Be more politely, man!")
+        return value
