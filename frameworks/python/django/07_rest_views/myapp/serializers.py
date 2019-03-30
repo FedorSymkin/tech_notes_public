@@ -42,7 +42,14 @@ class PostSerializer(serializers.ModelSerializer):
     def get_author(self, obj):
         return obj.author.username
 
-    # Для лучшего понимания - мы можем как хотим менят поля на выдачу.
-    # Допустим мы хотим ещё отдать title поста только заглавными буквами
+    # Для лучшего понимания - мы можем как хотим менять поля на выдачу.
+    # Допустим мы хотим ещё отдать title поста только заглавными буквами.
+    #
+    # Важно: в этом случае поле становится read-only (в следующем примере есть про запрос PATCH,
+    # так вот мы не сможем сделать PATCH на title, если title = serializers.SerializerMethodField())
+    # По смыслу оно понятно - если внешнее представление не совпадает с внутренней фоормой хранения
+    # то без явного указания как преобразовывать внешний вид данных по внутренний
+    # django не знает как записывать это поле.
+    # https://stackoverflow.com/questions/37475829/django-rest-framework-how-to-update-serializermethodfield
     def get_title(self, obj):
         return obj.title.upper()
