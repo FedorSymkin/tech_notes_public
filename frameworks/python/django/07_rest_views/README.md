@@ -1,5 +1,13 @@
-# Django REST API framework, основы
+# Django REST framework, начинаем разбираться
+https://www.django-rest-framework.org/
 
+```
+sudo pip3 install djangorestframework
+sudo pip3 install markdown
+sudo pip3 install django-filter
+```
+
+## Основы
 * Далее по тексту будет понятия:
 	* "обычный" django, который выдаёт html (всё что рассматривалось ранее) 
 	* API - "необычный" django на основе REST framework, который выдаёт json - всё что рассматривается сейчас.
@@ -13,5 +21,5 @@
 * Это поведение можно отключить в общих настройках settings.py, см. `REST_FRAMEWORK`
 * Также можно обратить внимание на секцию LOGGING в settings.py - настроил так, чтобы можно было смотреть запросы к БД
 
-##А также
+## А также
 * Не забыть подключить `'rest_framework'` в INSTALLED_APPS!
