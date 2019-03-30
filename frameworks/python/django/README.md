@@ -18,6 +18,11 @@ Framework python для создания веб-приложений. Позво
 	* Дружит с apache через wsgi
 	* И многое другое
 
-## Источник информации
-* https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p
-* https://github.com/CoreyMSchafer/code_snippets/tree/master/Django_Blog
+## Источники информации
+* Django as is:
+    * https://www.youtube.com/playlist?list=PL-osiE80TeTtoQCKZ03TU5fNfx2UY6U4p
+    * https://github.com/CoreyMSchafer/code_snippets/tree/master/Django_Blog
+    
+* Rest API framework
+    * https://www.youtube.com/watch?v=tG6O8YF91HE
+    * https://github.com/codingforentrepreneurs/REST-API-Basics/tree/master/src
