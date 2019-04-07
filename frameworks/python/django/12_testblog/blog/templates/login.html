@@ -1,0 +1,11 @@
+<form method="POST">
+    {% csrf_token %}
+    <fieldset>
+        <legend>Log In</legend>
+        {{ form }}
+    </fieldset>
+
+    <div>
+        <button type="submit">Login</button>
+    </div>
+</form>

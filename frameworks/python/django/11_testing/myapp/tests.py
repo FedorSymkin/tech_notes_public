@@ -28,7 +28,7 @@ def _mkpost(user, title, content):
 # работу по созданию фейковой базы и т.д.
 class ModelsUnitTestCase(TestCase):
     def setUp(self):
-        # Подготовка данных теста, запускается один раз на класс
+        # Подготовка данных теста, запускается на каждый тест
         # Делаем 3 пользователя и каждому по 3 сообщения
         users = [_mkuser('user{}'.format(u), 'passwd{}'.format(u)) for u in range(3)]
         for user in users:
@@ -51,7 +51,7 @@ class ModelsUnitTestCase(TestCase):
 # Пример интеграционного теста - LiveServerTestCase обеспечивает запусе сервера целиком
 class GetPostsIntegrationTestCase(LiveServerTestCase):
     def setUp(self):
-        # Подготовка данных теста, запускается один раз на класс
+        # Подготовка данных теста, запускается на каждый тест
         # Делаем 3 пользователя и каждому по 3 сообщения
         users = [_mkuser('user{}'.format(u), 'passwd{}'.format(u)) for u in range(3)]
         for user in users:
@@ -71,7 +71,7 @@ class GetPostsIntegrationTestCase(LiveServerTestCase):
             'password': 'passwd1',
         })
 
-        # Получаен токен для уже готового пользователя которого создали в setUp
+        # Получаем токен для уже готового пользователя которого создали в setUp
         token_resp = self.client.post('/api/get_token', content_type='application/json', data=user_data)
         self.assertEqual(token_resp.status_code, 200)
         token = token_resp.data['token']
