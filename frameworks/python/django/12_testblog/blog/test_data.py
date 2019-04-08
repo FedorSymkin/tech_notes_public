@@ -1,3 +1,7 @@
+"""
+Здесь код для генерации общих тестовых данных, нужных как для юнит так и для интеграционных тестов
+"""
+
 import logging
 from collections import defaultdict
 
@@ -45,7 +49,7 @@ class TestData:
         ]
 
     def mksubscribe(self, user, other):
-        models.Subsribe(
+        models.Subscribe(
             user_from=user,
             user_to=other,
         ).save()

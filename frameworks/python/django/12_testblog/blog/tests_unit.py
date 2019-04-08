@@ -85,16 +85,16 @@ class CascaseDeleteTestCase(TestCase):
 
         self.assertNotEqual(len(models.MyUser.objects.filter(id=user_id)), 0)
         self.assertNotEqual(len(models.Post.objects.filter(user_id=user_id)), 0)
-        self.assertNotEqual(len(models.Subsribe.objects.filter(user_from_id=user_id)), 0)
-        self.assertNotEqual(len(models.Subsribe.objects.filter(user_to_id=user_id)), 0)
+        self.assertNotEqual(len(models.Subscribe.objects.filter(user_from_id=user_id)), 0)
+        self.assertNotEqual(len(models.Subscribe.objects.filter(user_to_id=user_id)), 0)
         self.assertNotEqual(len(models.MyUser.read_posts.through.objects.filter(myuser_id=user_id)), 0)
 
         user.delete()
 
         self.assertEqual(len(models.MyUser.objects.filter(id=user_id)), 0)
         self.assertEqual(len(models.Post.objects.filter(user_id=user_id)), 0)
-        self.assertEqual(len(models.Subsribe.objects.filter(user_from_id=user_id)), 0)
-        self.assertEqual(len(models.Subsribe.objects.filter(user_to_id=user_id)), 0)
+        self.assertEqual(len(models.Subscribe.objects.filter(user_from_id=user_id)), 0)
+        self.assertEqual(len(models.Subscribe.objects.filter(user_to_id=user_id)), 0)
         self.assertEqual(len(models.MyUser.read_posts.through.objects.filter(myuser_id=user_id)), 0)
 
     def test_delete_post(self):

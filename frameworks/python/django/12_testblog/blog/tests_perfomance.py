@@ -27,7 +27,7 @@ class PerfomanceTestCase(LiveServerTestCase):
 
         self.log.info('start perfomance test (feed request)...')
         start = time.time()
-        resp = self.client.get('/feed/')
+        resp = self.client.get('/me/feed/')
         end = time.time()
         elapsed = end - start
 

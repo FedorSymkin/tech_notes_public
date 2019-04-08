@@ -44,7 +44,7 @@ class DataChangeTestCase(LiveServerTestCase):
             self.assertEqual(response.data['content'], 'some content of default user')
             self.assertTrue(bool(response.data['datetime']))
 
-        resp = self.client.post('/posts/new/', content_type='application/json', data=data_to_post)
+        resp = self.client.post('/me/posts/new/', content_type='application/json', data=data_to_post)
         do_assert(resp, 201)
 
         post_id = resp.data['id']
@@ -67,10 +67,10 @@ class DataChangeTestCase(LiveServerTestCase):
             self.assertEqual(response.data['user_from'], self.default_user.id)
             self.assertEqual(response.data['user_to'], user2.id)
 
-        resp = self.client.post('/subscribes/new/', content_type='application/json', data=data_to_post)
+        resp = self.client.post('/me/subscribes/new/', content_type='application/json', data=data_to_post)
         do_assert(resp, 201)
 
-        resp = self.client.get('/subscribes/{}/'.format(user2.id))
+        resp = self.client.get('/me/subscribes/{}/'.format(user2.id))
         do_assert(resp, 200)
 
     def test_delete_subscribe(self):
@@ -78,11 +78,11 @@ class DataChangeTestCase(LiveServerTestCase):
         data = test_data.TestData()
         user2 = data.mkuser('user2')
         data.mksubscribe(self.default_user, user2)
-        self.assertEqual(self.client.get('/subscribes/{}/'.format(user2.id)).status_code, 200)
+        self.assertEqual(self.client.get('/me/subscribes/{}/'.format(user2.id)).status_code, 200)
 
-        resp = self.client.delete('/subscribes/{}/'.format(user2.id))
+        resp = self.client.delete('/me/subscribes/{}/'.format(user2.id))
         self.assertEqual(resp.status_code, 204)
-        self.assertEqual(self.client.get('/subscribes/{}/'.format(user2.id)).status_code, 404)
+        self.assertEqual(self.client.get('/me/subscribes/{}/'.format(user2.id)).status_code, 404)
 
     def test_mark_as_read(self):
         data = test_data.TestData()
@@ -141,7 +141,7 @@ class DataRetrieveTestCase(LiveServerTestCase):
                 'username': item.get('username'),
                 'posts_count': item.get('posts_count'),
             }
-            for item in resp.data
+            for item in resp.data['results']
         ]
 
         self.assertEqual(fact, expected)
@@ -164,7 +164,7 @@ class DataRetrieveTestCase(LiveServerTestCase):
                 'user': item.get('user'),
                 'username': item.get('username'),
             }
-            for item in resp.data
+            for item in resp.data['results']
             ]
 
         self.assertEqual(fact, expected)
@@ -178,13 +178,13 @@ class DataRetrieveTestCase(LiveServerTestCase):
     def test_get_my_posts(self):
         user2_id = self.test_data.users[2].id
         self.client.login(username='user2', password='passwd2')
-        resp = self.client.get('/posts/')
+        resp = self.client.get('/me/posts/')
         self.assertEqual(resp.status_code, 200)
         self._assert_user_posts(user2_id, 8, resp)
 
     def test_feed(self):
         self.client.login(username='user2', password='passwd2')
-        resp = self.client.get('/feed/')
+        resp = self.client.get('/me/feed/')
         self.assertEqual(resp.status_code, 200)
 
         expected = [
@@ -224,20 +224,20 @@ class DataRetrieveTestCase(LiveServerTestCase):
             {
                 'title': item.get('title'),
             }
-            for item in resp.data
+            for item in resp.data['results']
         ]
 
         self.assertEqual(fact, expected)
 
     def test_feed_no_posts(self):
         self.client.login(username='user6', password='passwd6')
-        resp = self.client.get('/feed/')
+        resp = self.client.get('/me/feed/')
         self.assertEqual(resp.status_code, 200)
-        self.assertEqual(resp.data, [])
+        self.assertEqual(resp.data['results'], [])
 
     def test_get_subscribes(self):
         self.client.login(username='user2', password='passwd2')
-        resp = self.client.get('/subscribes/')
+        resp = self.client.get('/me/subscribes/')
         self.assertEqual(resp.status_code, 200)
 
         expected = [
@@ -260,7 +260,7 @@ class DataRetrieveTestCase(LiveServerTestCase):
                 'user_from': item.get('user_from'),
                 'user_to': item.get('user_to'),
             }
-            for item in resp.data
+            for item in resp.data['results']
         ]
 
         self.assertEqual(fact, expected)
@@ -290,7 +290,7 @@ class BadRequestTestCase(LiveServerTestCase):
             'user_to': 42,
         })
 
-        resp = self.client.post('/subscribes/new/', content_type='application/json', data=data_to_post)
+        resp = self.client.post('/me/subscribes/new/', content_type='application/json', data=data_to_post)
         self.assertEqual(resp.status_code, 400)
 
     def test_subscribe_duplicate(self):
@@ -301,10 +301,10 @@ class BadRequestTestCase(LiveServerTestCase):
         data_to_post = json.dumps({
             'user_to': user2.id,
         })
-        resp = self.client.post('/subscribes/new/', content_type='application/json', data=data_to_post)
+        resp = self.client.post('/me/subscribes/new/', content_type='application/json', data=data_to_post)
         self.assertEqual(resp.status_code, 201)
 
-        resp = self.client.post('/subscribes/new/', content_type='application/json', data=data_to_post)
+        resp = self.client.post('/me/subscribes/new/', content_type='application/json', data=data_to_post)
         self.assertEqual(resp.status_code, 400)
 
     def test_subscribe_to_self(self):
@@ -312,7 +312,7 @@ class BadRequestTestCase(LiveServerTestCase):
         data_to_post = json.dumps({
             'user_to': self.default_user.id,
         })
-        resp = self.client.post('/subscribes/new/', content_type='application/json', data=data_to_post)
+        resp = self.client.post('/me/subscribes/new/', content_type='application/json', data=data_to_post)
         self.assertEqual(resp.status_code, 400)
 
     def test_read_post_non_existing(self):
@@ -351,7 +351,7 @@ class AuthentificationTestCase(LiveServerTestCase):
         })
 
         resp = self.client.post(
-            '/posts/new/',
+            '/me/posts/new/',
             content_type='application/json',
             data=data_to_post,
             HTTP_AUTHORIZATION='Token {}'.format(token),
@@ -375,7 +375,7 @@ class AuthentificationTestCase(LiveServerTestCase):
                 'content': item.get('content'),
                 'username': item.get('username'),
             }
-            for item in resp.data
+            for item in resp.data['results']
         ]
 
         self.assertEqual(fact, expected)
@@ -405,7 +405,7 @@ class AuthentificationTestCase(LiveServerTestCase):
         })
 
         resp = self.client.post(
-            '/posts/new/',
+            '/me/posts/new/',
             content_type='application/json',
             data=data_to_post,
             HTTP_AUTHORIZATION='Token aaa',
@@ -420,9 +420,50 @@ class AuthentificationTestCase(LiveServerTestCase):
         })
 
         resp = self.client.post(
-            '/posts/new/',
+            '/me/posts/new/',
             content_type='application/json',
             data=data_to_post,
         )
 
         self.assertEqual(resp.status_code, 401)
+
+
+class PaginationTestCase(LiveServerTestCase):
+    def setUp(self):
+        data = test_data.TestData()
+        user = data.mkuser('default')
+        for i in range(35):
+            data.mkpost(user, 'post{}'.format(i), 'content')
+
+    def _do_test(self, expected_range, page=None):
+        url = '/posts/'
+        if page:
+            url += '?page={}'.format(page)
+
+        resp = self.client.get(url)
+        self.assertEqual(resp.status_code, 200)
+
+        expected = {
+            'results': [{'title': 'post{}'.format(i)} for i in expected_range],
+            'count': 35,
+        }
+
+        fact = {
+            'results': [{'title': item.get('title')} for item in resp.data['results']],
+            'count': resp.data['count'],
+        }
+
+        self.assertEqual(fact, expected)
+
+    def test_first_page(self):
+        self._do_test(expected_range=reversed(range(25, 35)))
+
+    def test_second_page(self):
+        self._do_test(expected_range=reversed(range(15, 25)), page=2)
+
+    def test_last_page(self):
+        self._do_test(expected_range=reversed(range(0, 5)), page=4)
+
+    def test_non_existing_page(self):
+        resp = self.client.get('/posts/?page=999')
+        self.assertEqual(resp.status_code, 404)

@@ -56,7 +56,7 @@ class SubscribeSerializer(serializers.ModelSerializer):
     user_from = serializers.SerializerMethodField()
 
     class Meta:
-        model = models.Subsribe
+        model = models.Subscribe
         fields = ('id', 'user_from', 'user_to')
 
     @staticmethod
