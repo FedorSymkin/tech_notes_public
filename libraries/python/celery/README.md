@@ -2,6 +2,9 @@
 
 Библиотека для python, реализующая очередь задач через сервер поставки сообщений (такие как RabbitMQ). Очень простая в использовании.
 
+## Источник
+http://devacademy.ru/posts/ochered-soobschenij-i-asinhronnyie-zadachi-s-pomoschyu-celery-i-rabbitmq/
+
 ## Как пользоваться Celery
 * Ставим декоратор из celery на нашу функцию (см. tasks.py) и она становится объектом таски
 
@@ -10,6 +13,8 @@
 * Далее из другой программы на python (main.py) импортируем наши функции (которые уже стали объектами тасок) и используем их как фьючи (типа std::future из C++)
 
 ## Как запускать пример
+`sudo pip3 install celery`
+`sudo apt-get install rabbitmq-server`
 `setsid celery worker -A tasks --concurrency=10 &` (tasks это модуль tasks.py)
 `python3 main.py`
 `killall celery`
