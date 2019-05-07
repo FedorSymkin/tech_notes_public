@@ -2,7 +2,7 @@
 
 Test payment system API for django learning purpose
 
-##Overview
+## Overview
 * REST API
 * Every user has exacly 1 wallet with some currency
 * There are 4 currencies in system: USD (base), EUR, CAD, CNY. Every currency has rate to base.
@@ -15,7 +15,7 @@ Test payment system API for django learning purpose
 * There is API endpoint for generating report of all wallets
 * Reports can be rendered in json or csv format
 
-##Wallets balance and operations logic details
+## Wallets balance and operations logic details
 * When operation (transfer or put) is created, it is in status "draft" and wallets balance is not affected
 * When transfer operation comes to status "processing", source wallet's balance is decreased. If source wallet of transfer operation doesn't have enouh money at that moment, operation is set to failed state, and cannot be continued later.
 * When transfer operation comes to status "accepted", money of operation is credited to destination wallet.
@@ -32,13 +32,13 @@ Test payment system API for django learning purpose
 * Operation status cannot be set twice, e.q. "accepted -> accepted" is not allowed
 * When operation status and wallet balance is changed, they are protected by row lock in DB
 
-##API format
+## API format
 * Input data in request body: JSON 
 * Output data in response: JSON or CSV for some endpoints
 
-##API endpoints examples
+## API endpoints examples
 
-###Create new user
+### Create new user
 `POST /users/new/`
 
 Request data example:
@@ -69,7 +69,7 @@ HTTP CODE: 201 CREATED
 }
 ```
 
-###Get user data
+### Get user data
 `GET /users/<user_id>/` 
 
 Response data example:
@@ -89,7 +89,7 @@ HTTP CODE: 200 OK
 }
 ```
 
-###Get wallet data (balance, currency)
+### Get wallet data (balance, currency)
 `GET /wallets/<wallet_id>/`
 
 Response data example:
@@ -103,7 +103,7 @@ HTTP CODE: 200 OK
 }
 ```
 
-###Create put money operation
+### Create put money operation
 `POST /wallets/<wallet_id>/put_money/`
 
 Request data example:
@@ -130,7 +130,7 @@ HTTP CODE: 201 CREATED
 }
 ```
 
-###Create transfer money operation
+### Create transfer money operation
 `POST /wallets/<wallet_from>/put_money/`
 
 Request data example:
@@ -158,7 +158,7 @@ HTTP CODE: 201 CREATED
 }
 ```
 
-###Get operation details
+### Get operation details
 `GET /operations/<operation_id>/`
 
 Response data example with new operation details:
@@ -177,7 +177,7 @@ HTTP CODE: 200 OK
 }
 ```
 
-###Set operation status (used by external payment gateway)
+### Set operation status (used by external payment gateway)
 `PATCH /operations/<operation_id>/set_status/`
 
 Request data example:
@@ -196,7 +196,7 @@ HTTP CODE: 200 OK
 }
 ```
 
-###Get report of wallet operations
+### Get report of wallet operations
 `GET /wallets/<wallet_id>/operations/?date_from=YYYY-mm-dd&date_to=YYYY-mm-dd&format=<format>`
 
 * date_from and date_to is optional
@@ -221,11 +221,11 @@ datetime,new_status,operation.amount,operation.currency,operation.currency_rate_
 2019-05-07T03:27:17.431000Z,draft,5.0000000,USD,1.0000000,1.0000000,1.5000000,1,accepted,1,2
 ```	
 
-###Get report of wallet operations by username
+### Get report of wallet operations by username
 `GET /users/by_name/<username>/operations/?date_from=YYYY-mm-dd&date_to=YYYY-mm-dd&format=<format>`
 Output is same
 
-###Get all users wallets (balance and currency)
+### Get all users wallets (balance and currency)
 `GET /wallets/all/?format=<format>`
 
 format = json|csv is optional (default json)
