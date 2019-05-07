@@ -41,6 +41,8 @@ class OperationSerializer(serializers.ModelSerializer):
         )
 
     def save(self, **kwargs):
+        # TODO maybe fail if wallet_from_id == wallet_to_id? Maybe not. Let's think...
+
         if self.validated_data.get('wallet_from'):
             currency_rate_wallet_from = self.validated_data['wallet_from'].currency.rate
         else:
