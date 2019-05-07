@@ -221,6 +221,22 @@ datetime,new_status,operation.amount,operation.currency,operation.currency_rate_
 2019-05-07T03:27:17.431000Z,draft,5.0000000,USD,1.0000000,1.0000000,1.5000000,1,accepted,1,2
 ```	
 
+fields description:
+
+* `datetime` - datetime of operation status change (or creation)
+* `new_status` - new_status
+* `operation.amount` - amount on money in operation currency
+* `operation.currency` - operation currency
+* `operation.currency_rate_operation` - rate of operation currency to USD at the moment of operation creation
+* `operation.currency_rate_wallet_from` - rate of source wallet currency (if present) to USD at the moment of operation creation
+* `operation.currency_rate_wallet_to` - rate of destination wallet currency to USD at the moment of operation creation
+* `operation.id` - unique operation id
+* `operation.status` - currently status of operation
+* `operation.wallet_from` - source wallet id 
+* `operation.wallet_to` - destination wallet id 
+
+TODO: make fields ordered in csv
+
 ### Get report of wallet operations by username
 `GET /users/by_name/<username>/operations/?date_from=YYYY-mm-dd&date_to=YYYY-mm-dd&format=<format>`
 Output is same

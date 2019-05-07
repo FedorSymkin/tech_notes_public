@@ -21,6 +21,9 @@ class MyUser(AbstractUser):
     country = models.CharField(max_length=256)
     city = models.CharField(max_length=256)
 
+    class Meta:
+        indexes = [models.Index(fields=['username', ])]
+
 
 class Currency(models.Model):
     name = models.CharField(max_length=3)
@@ -31,7 +34,7 @@ class Currency(models.Model):
 
 
 class Wallet(models.Model):
-    user = models.OneToOneField(MyUser, on_delete=models.PROTECT, related_name='wallet')
+    user = models.OneToOneField(MyUser, on_delete=models.PROTECT, related_name='wallet', db_index=True)
     currency = models.ForeignKey(Currency, on_delete=models.PROTECT)
     balance = models.DecimalField(
         decimal_places=settings.DECIMAL_PLACES,
@@ -45,8 +48,20 @@ class Wallet(models.Model):
 
 
 class Operation(models.Model):
-    wallet_from = models.ForeignKey(Wallet, on_delete=models.PROTECT, related_name='wallet_from', null=True)
-    wallet_to = models.ForeignKey(Wallet, on_delete=models.PROTECT, related_name='wallet_to')
+    wallet_from = models.ForeignKey(
+        Wallet,
+        on_delete=models.PROTECT,
+        related_name='wallet_from',
+        null=True,
+        db_index=True
+    )
+
+    wallet_to = models.ForeignKey(
+        Wallet,
+        on_delete=models.PROTECT,
+        related_name='wallet_to',
+        db_index=True
+    )
 
     amount = models.DecimalField(
         decimal_places=settings.DECIMAL_PLACES,
@@ -95,7 +110,7 @@ def post_save_operation_status(sender, instance, **kwargs):
 
 
 class StatusChange(models.Model):
-    operation = models.ForeignKey(Operation, on_delete=models.PROTECT)
+    operation = models.ForeignKey(Operation, on_delete=models.PROTECT, db_index=True)
     new_status = models.CharField(max_length=10)
     datetime = models.DateTimeField(default=timezone.now)
 
