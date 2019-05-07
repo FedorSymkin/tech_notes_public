@@ -1,0 +1,89 @@
+[
+  {
+    "model": "app.myuser",
+    "pk": 1,
+    "fields": {
+      "password": "pass1",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "user1",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2019-05-07T03:08:04.333Z",
+      "country": "Russia",
+      "city": "Moscow",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "app.myuser",
+    "pk": 2,
+    "fields": {
+      "password": "pass2",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "user2",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2019-05-07T03:08:17.680Z",
+      "country": "Russia",
+      "city": "Moscow",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "app.myuser",
+    "pk": 3,
+    "fields": {
+      "password": "pass3",
+      "last_login": null,
+      "is_superuser": false,
+      "username": "user3",
+      "first_name": "",
+      "last_name": "",
+      "email": "",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2019-05-07T03:08:29.230Z",
+      "country": "Russia",
+      "city": "Moscow",
+      "groups": [],
+      "user_permissions": []
+    }
+  },
+  {
+    "model": "app.wallet",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "currency": 1,
+      "balance": "9.2500000"
+    }
+  },
+  {
+    "model": "app.wallet",
+    "pk": 2,
+    "fields": {
+      "user": 2,
+      "currency": 2,
+      "balance": "10.5000000"
+    }
+  },
+  {
+    "model": "app.wallet",
+    "pk": 3,
+    "fields": {
+      "user": 3,
+      "currency": 3,
+      "balance": "21.3333333"
+    }
+  }
+]
