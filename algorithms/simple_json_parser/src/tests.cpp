@@ -3,7 +3,8 @@
 
 #include "json.h"
 
-// Это
+// Это тесты, сделанные на скорую руку, т.к. это не проект из реального продакшена.
+// В реальной жизни делать тесты через system, вызов jq и прочие хаки, конечно же, не стоит.
 
 std::string ReadFile(const std::string& filename)
 {
@@ -106,4 +107,5 @@ TEST(json_parser, fails) {
     TestWithFail("{\"a\": \"\\y\"}");
     TestWithFail("[\"a\"]");
     TestWithFail("\"hello\"");
+    TestWithFail("{\"aa\": \"bb\", \"aa\": \"dd\"}");
 }
