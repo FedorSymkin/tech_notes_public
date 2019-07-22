@@ -220,3 +220,62 @@ TEST(network, simple_tcp_server_multithread_readline) {
         std::thread(threadFunc, std::move(newSocket)).detach();
     }
 }
+
+
+TEST(network, simple_tcp_server_multithread_fionread) {
+    // Как проверить - запустить сервер, а потом через telnet
+    // Демонстрация чтение сокета через предварительное узнавание сколько байт доступно для чтения
+    // Может быть полезно для разного рода оптимизаций - чтобы заранее выделять столько памяти, сколько надо, и не больше.
+
+    string port = "3490";
+    auto addrinfo = TAddrInfo("", port, ETransportProtocol::TCP);
+    addrinfo.AssertValid();
+
+    std::unique_ptr<TSocket> listenSocket;
+    for (const auto& addr: addrinfo) {
+        listenSocket = std::make_unique<TSocket>(addr);
+        if (!listenSocket->IsValid()) {
+            continue;
+        }
+
+        if (!listenSocket->Bind(addr)) {
+            continue;
+        }
+
+        break;
+    }
+    if (!listenSocket)
+        throw std::runtime_error("could not create listenSocket");
+
+    cout << "listening on port " << port << endl;
+    listenSocket->Listen(10);
+
+
+    cout << "waiting for connections..." << endl;
+    while (true) {
+        std::unique_ptr<TSocket> newSocket = listenSocket->Accept();
+        cout << "conection from " << newSocket->GetRemoteAddr() << endl;
+
+        const auto threadFunc = [](std::unique_ptr<TSocket>&& socket){
+            while (true) {
+                //Сначала через select ждём данных
+                socket->WaitForData();
+
+                //Дальше через FIONREAD получаем число доступных для чтения байт
+                size_t nread = socket->BytesToRead();
+
+                //Если 0 - значит сокет закрыт
+                if (!nread) {
+                    break;
+                }
+
+                //Читаем ровно столько байт, сколько есть
+                string data = socket->RecvN(nread);
+                cout << "got data: (" << data.size() <<  ") '" << data << "'" << endl;
+            }
+            socket.reset();
+            cout << "end of connection thread\n";
+        };
+        std::thread(threadFunc, std::move(newSocket)).detach();
+    }
+}

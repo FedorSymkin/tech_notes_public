@@ -331,6 +331,26 @@ public:
         return std::string(buf);
     }
 
+    std::string RecvN(const size_t n)
+    {
+        AssertValid();
+        AssertHasRemoteAddr();
+
+        static size_t MAXDATASIZE = 4096;
+        if (n > MAXDATASIZE)
+            throw std::runtime_error("too big bytes count");
+
+        std::string buf;
+        buf.resize(n);
+
+        int numbytes = 0;
+        if ((numbytes = recv(Fd, buf.data(), n, 0)) == -1)
+            CError("recv");
+
+        buf.resize(numbytes);
+        return buf;
+    }
+
     struct TDatagram
     {
         std::string RemoteAddr;
@@ -373,6 +393,26 @@ public:
 
         if (sendto(Fd, data.data(), data.size(), 0, addr.ai_addr, addr.ai_addrlen) == -1)
             CError("sendto");
+    }
+
+    size_t BytesToRead()
+    {
+        AssertValid();
+        AssertHasRemoteAddr();
+
+        int res = 0;
+        if (ioctl(Fd, FIONREAD, &res) == -1)
+            CError("ioctl FIONREAD");
+
+        return res;
+    }
+
+    void WaitForData()
+    {
+        fd_set readfds;
+        FD_ZERO(&readfds);
+        FD_SET(Fd, &readfds);
+        select(Fd + 1, &readfds, NULL, NULL, NULL);
     }
 };
 
