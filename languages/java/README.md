@@ -6,7 +6,7 @@
 * [Шаблоны](templates.md)
 * [Многопоточность](multithreading.md)
 * [Системы сборки - maven](maven.md)
-* TODO [Системы сборки - gradle](gradle.md)
+* [Системы сборки - gradle](gradle.md)
 * TODO [Типовые задачи](default_cases.md)
 * TODO [spring](spring.md)
 * TODO [springboot](springboot.md)
