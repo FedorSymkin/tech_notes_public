@@ -7,7 +7,7 @@ djangorestframework==3.9.2
 coreapi==2.3.3
 django-migrations-graph==0.1.1
 django-eraserhead==0.1.4
-django-debug-toolbar==1.9
+django-debug-toolbar==1.11.1
 djangorestframework-csv==2.1.0
 
 # Tests / linters
