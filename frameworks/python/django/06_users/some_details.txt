@@ -1,0 +1,40 @@
+Немного инфы про то как хранятся пользователи и сессии.
+
+===================================
+Стандартная таблица пользователей django:
+sqlite> PRAGMA table_info(auth_user);
+0|id|integer|1||1
+1|password|varchar(128)|1||0
+2|last_login|datetime|0||0
+3|is_superuser|bool|1||0
+4|username|varchar(150)|1||0
+5|first_name|varchar(30)|1||0
+6|email|varchar(254)|1||0
+7|is_staff|bool|1||0
+8|is_active|bool|1||0
+9|date_joined|datetime|1||0
+10|last_name|varchar(150)|1||0
+
+
+===================================
+Данные этой таблицы
+sqlite> SELECT * from auth_user;
+1|pbkdf2_sha256$120000$TLmRPuWjbMgd$3TBre5w/7v8QXdlxsCIVC4+S3ixjuzCEwNCthHz+JV8=|2019-03-28 05:33:26.208718|0|petya||petya@example.com|0|1|2019-03-28 05:33:13.707987|
+2|pbkdf2_sha256$120000$Fzlnb4m42akA$ZbIlsIel9QCYfciIB/yJV4VmaZkRtCW+pA+i8Lf7aYc=|2019-03-28 05:34:01.547634|0|vasya||vasya@example.com|0|1|2019-03-28 05:33:51.220677|
+
+Видим что пароли захешированы (и ещё с солью)
+
+===================================
+Стандартная таблица сессий django:
+sqlite> PRAGMA table_info(django_session);
+0|session_key|varchar(40)|1||1
+1|session_data|text|1||0
+2|expire_date|datetime|1||0
+
+===================================
+sqlite> SELECT * FROM django_session;
+Данные этой таблицы
+bhgv0qg1s6dqd0o28b706t681ztgtpr6|YjIyMWQ0MTJlMzY1MDQwYTdjZGFiNzY1YzgyMTI1ZTRiZjE3YzJmMTp7Il9hdXRoX3VzZXJfaWQiOiIyIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5YWRmM2Q2MTUwNTBiZjBhYjBmYmQ0ZDU1YTI1NWE2ODI1ODQ5NjEzIn0=|2019-04-11 05:34:01.567335
+
+* Ключ bhgv0qg1s6dqd0o28b706t681ztgtpr6 хранится у пользователя в куке
+* Видим, что по умолчанию время жизни сессии - 2 недели (юзер залогинен 2019-03-28 05:34:01, сессия истекает 2019-04-11 05:34:01)

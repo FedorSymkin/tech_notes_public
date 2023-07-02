@@ -1,0 +1,33 @@
+<h1>Posts</h1>
+
+<a href="{% url 'new_post' %}">New Post</a>
+
+<hr>
+
+{% for post in posts %}
+    <div>
+        <h3>
+            {{ post.title }}
+        </h3>
+
+        <div>
+            <font color="blue">post by @{{ post.author }}:</font>
+        </div>
+
+        <!-- Да, это небезопасно, но пока не важно -->
+        <div>
+            {{ post.content }}
+        </div>
+
+        <!-- user - это системный объект django -->
+        {% if post.author == user %}
+          <div>
+            <a href="{% url 'update_post' post.id %}">Update</a>
+          </div>
+        {% endif %}
+    </div>
+
+    <hr>
+{% endfor %}
+
+

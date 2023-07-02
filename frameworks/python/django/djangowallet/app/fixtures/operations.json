@@ -1,0 +1,323 @@
+[
+  {
+    "model": "app.operation",
+    "pk": 1,
+    "fields": {
+      "wallet_from": 1,
+      "wallet_to": 2,
+      "amount": "5.0000000",
+      "currency": 1,
+      "currency_rate_wallet_from": "1.0000000",
+      "currency_rate_operation": "1.0000000",
+      "currency_rate_wallet_to": "1.5000000"
+    }
+  },
+  {
+    "model": "app.operation",
+    "pk": 2,
+    "fields": {
+      "wallet_from": 2,
+      "wallet_to": 1,
+      "amount": "5.0000000",
+      "currency": 1,
+      "currency_rate_wallet_from": "1.5000000",
+      "currency_rate_operation": "1.0000000",
+      "currency_rate_wallet_to": "1.0000000"
+    }
+  },
+  {
+    "model": "app.operation",
+    "pk": 3,
+    "fields": {
+      "wallet_from": 1,
+      "wallet_to": 2,
+      "amount": "1.0000000",
+      "currency": 3,
+      "currency_rate_wallet_from": "1.0000000",
+      "currency_rate_operation": "0.7500000",
+      "currency_rate_wallet_to": "1.5000000"
+    }
+  },
+  {
+    "model": "app.operation",
+    "pk": 4,
+    "fields": {
+      "wallet_from": 1,
+      "wallet_to": 2,
+      "amount": "0.2500000",
+      "currency": 1,
+      "currency_rate_wallet_from": "1.0000000",
+      "currency_rate_operation": "1.0000000",
+      "currency_rate_wallet_to": "1.5000000"
+    }
+  },
+  {
+    "model": "app.operation",
+    "pk": 5,
+    "fields": {
+      "wallet_from": 1,
+      "wallet_to": 2,
+      "amount": "2000.0000000",
+      "currency": 1,
+      "currency_rate_wallet_from": "1.0000000",
+      "currency_rate_operation": "1.0000000",
+      "currency_rate_wallet_to": "1.5000000"
+    }
+  },
+  {
+    "model": "app.operation",
+    "pk": 6,
+    "fields": {
+      "wallet_from": null,
+      "wallet_to": 3,
+      "amount": "10.0000000",
+      "currency": 3,
+      "currency_rate_wallet_from": null,
+      "currency_rate_operation": "0.7500000",
+      "currency_rate_wallet_to": "0.7500000"
+    }
+  },
+  {
+    "model": "app.operation",
+    "pk": 7,
+    "fields": {
+      "wallet_from": null,
+      "wallet_to": 3,
+      "amount": "1.0000000",
+      "currency": 1,
+      "currency_rate_wallet_from": null,
+      "currency_rate_operation": "1.0000000",
+      "currency_rate_wallet_to": "0.7500000"
+    }
+  },
+
+  {
+    "model": "app.operationstatus",
+    "pk": 1,
+    "fields": {
+      "status": "accepted"
+    }
+  },
+  {
+    "model": "app.operationstatus",
+    "pk": 2,
+    "fields": {
+      "status": "accepted"
+    }
+  },
+  {
+    "model": "app.operationstatus",
+    "pk": 3,
+    "fields": {
+      "status": "accepted"
+    }
+  },
+  {
+    "model": "app.operationstatus",
+    "pk": 4,
+    "fields": {
+      "status": "failed"
+    }
+  },
+  {
+    "model": "app.operationstatus",
+    "pk": 5,
+    "fields": {
+      "status": "failed"
+    }
+  },
+  {
+    "model": "app.operationstatus",
+    "pk": 6,
+    "fields": {
+      "status": "accepted"
+    }
+  },
+  {
+    "model": "app.operationstatus",
+    "pk": 7,
+    "fields": {
+      "status": "accepted"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 1,
+    "fields": {
+      "operation": 1,
+      "new_status": "draft",
+      "datetime": "2019-05-07T03:27:17.431Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 2,
+    "fields": {
+      "operation": 1,
+      "new_status": "processing",
+      "datetime": "2019-05-07T03:27:35.618Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 3,
+    "fields": {
+      "operation": 1,
+      "new_status": "accepted",
+      "datetime": "2019-05-07T03:27:45.996Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 4,
+    "fields": {
+      "operation": 2,
+      "new_status": "draft",
+      "datetime": "2019-05-07T03:28:11.727Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 5,
+    "fields": {
+      "operation": 2,
+      "new_status": "processing",
+      "datetime": "2019-05-07T03:28:19.864Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 6,
+    "fields": {
+      "operation": 2,
+      "new_status": "accepted",
+      "datetime": "2019-05-07T03:28:29.935Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 7,
+    "fields": {
+      "operation": 3,
+      "new_status": "draft",
+      "datetime": "2019-05-07T03:28:55.508Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 8,
+    "fields": {
+      "operation": 3,
+      "new_status": "processing",
+      "datetime": "2019-05-07T03:29:07.613Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 9,
+    "fields": {
+      "operation": 3,
+      "new_status": "accepted",
+      "datetime": "2019-05-07T03:29:23.894Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 10,
+    "fields": {
+      "operation": 4,
+      "new_status": "draft",
+      "datetime": "2019-05-07T03:30:32.502Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 11,
+    "fields": {
+      "operation": 4,
+      "new_status": "processing",
+      "datetime": "2019-05-07T03:30:39.606Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 12,
+    "fields": {
+      "operation": 4,
+      "new_status": "failed",
+      "datetime": "2019-05-07T03:30:52.732Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 13,
+    "fields": {
+      "operation": 5,
+      "new_status": "draft",
+      "datetime": "2019-05-07T03:31:08.431Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 14,
+    "fields": {
+      "operation": 5,
+      "new_status": "failed",
+      "datetime": "2019-05-07T03:31:20.977Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 15,
+    "fields": {
+      "operation": 6,
+      "new_status": "draft",
+      "datetime": "2019-05-07T03:32:00.149Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 16,
+    "fields": {
+      "operation": 6,
+      "new_status": "processing",
+      "datetime": "2019-05-07T03:32:05.279Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 17,
+    "fields": {
+      "operation": 6,
+      "new_status": "accepted",
+      "datetime": "2019-05-07T03:32:09.916Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 18,
+    "fields": {
+      "operation": 7,
+      "new_status": "draft",
+      "datetime": "2019-05-07T03:32:27.622Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 19,
+    "fields": {
+      "operation": 7,
+      "new_status": "processing",
+      "datetime": "2019-05-07T03:32:40.676Z"
+    }
+  },
+  {
+    "model": "app.statuschange",
+    "pk": 20,
+    "fields": {
+      "operation": 7,
+      "new_status": "accepted",
+      "datetime": "2019-05-07T03:32:49.134Z"
+    }
+  }
+]
